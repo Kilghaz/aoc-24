@@ -4,6 +4,7 @@ import (
 	"aoc24/day_1"
 	"aoc24/day_2"
 	"aoc24/day_3"
+	"aoc24/day_4"
 	"aoc24/io"
 	"os"
 	"strconv"
@@ -21,6 +22,10 @@ var advents = map[int][]func(input string){
 	3: {
 		day_3.Part1,
 		day_3.Part2,
+	},
+	4: {
+		day_4.Part1,
+		day_4.Part2,
 	},
 }
 
