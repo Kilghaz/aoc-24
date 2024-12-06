@@ -6,9 +6,9 @@ import (
 	"aoc24/day_3"
 	"aoc24/day_4"
 	"aoc24/day_5"
+	"aoc24/day_6"
 	"aoc24/io"
 	"os"
-	"strconv"
 )
 
 var advents = map[int][]func(input string){
@@ -32,19 +32,20 @@ var advents = map[int][]func(input string){
 		day_5.Part1,
 		day_5.Part2,
 	},
+	6: {
+		day_6.Part1,
+		day_6.Part2,
+	},
 }
 
 func main() {
-	day := toInt(os.Args[1])
-	part := toInt(os.Args[2]) - 1
-	input := io.LoadInput(day)
-	advents[day][part](input)
-}
-
-func toInt(value string) int {
-	parsed, err := strconv.ParseInt(value, 10, 64)
-	if err != nil {
-		panic(err)
+	day := io.ParseInt(os.Args[1])
+	part := io.ParseInt(os.Args[2]) - 1
+	var input string
+	if len(os.Args) == 3 || os.Args[3] != "test" {
+		input = io.LoadInput(day)
+	} else {
+		input = io.LoadTestInput(day)
 	}
-	return int(parsed)
+	advents[day][part](input)
 }
