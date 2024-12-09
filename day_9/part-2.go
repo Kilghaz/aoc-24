@@ -45,13 +45,9 @@ func Part2(input string) {
 		}
 	}
 
-	nonEmptySpaceBlocks := lo.Filter(spaceBlocks, func(block Block, index int) bool {
-		return block.size > 0
-	})
-
 	diskBlocks := make([]Block, 0)
 	diskBlocks = append(diskBlocks, fileBlocks...)
-	diskBlocks = append(diskBlocks, nonEmptySpaceBlocks...)
+	diskBlocks = append(diskBlocks, spaceBlocks...)
 	slices.SortFunc(diskBlocks, func(a, b Block) int {
 		return a.offset - b.offset
 	})
