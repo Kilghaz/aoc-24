@@ -56,6 +56,5 @@ func Part2(input string) {
 		return slice.Fill(make([]int, block.size), block.id)
 	})
 
-	checksum := calculateChecksum(disk)
-	println(checksum)
+	println(calculateChecksum(disk))
 }

@@ -26,6 +26,5 @@ func Part1(input string) {
 		disk = append(disk, blockTypeOperation[block.blockType](&fileData, dataSize)...)
 	}
 
-	checksum := calculateChecksum(disk)
-	println(checksum)
+	println(calculateChecksum(disk))
 }
