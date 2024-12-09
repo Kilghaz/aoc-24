@@ -5,34 +5,25 @@ import (
 	"github.com/samber/lo"
 )
 
+var blockTypeOperation = map[BlockType]func(data *[]int, size int) []int{
+	File:      slice.ShiftN[int],
+	FreeSpace: slice.PopN[int],
+}
+
 func Part1(input string) {
 	blocks := parseBlocks(input)
 
-	fileBlocks := lo.Filter(blocks, func(block Block, index int) bool {
-		return block.blockType == File
-	})
-
-	fileData := lo.FlatMap(fileBlocks, func(block Block, index int) []int {
-		return slice.Fill(make([]int, block.size), index)
+	fileData := lo.FlatMap(blocks, func(block Block, index int) []int {
+		if block.blockType == File {
+			return slice.Fill(make([]int, block.size), block.id)
+		}
+		return []int{}
 	})
 
 	disk := make([]int, 0)
 	for _, block := range blocks {
-		if len(fileData) == 0 {
-			break
-		}
-
-		dataSize := block.size
-		if dataSize > len(fileData) {
-			dataSize = len(fileData)
-		}
-
-		if block.blockType == File {
-			disk = append(disk, slice.Splice(&fileData, 0, dataSize)...)
-		}
-		if block.blockType == FreeSpace {
-			disk = append(disk, slice.PopN(&fileData, dataSize)...)
-		}
+		dataSize := min(block.size, len(fileData))
+		disk = append(disk, blockTypeOperation[block.blockType](&fileData, dataSize)...)
 	}
 
 	checksum := calculateChecksum(disk)
