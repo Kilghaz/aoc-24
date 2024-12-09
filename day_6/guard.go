@@ -47,7 +47,7 @@ func rotate(guard *Guard) {
 }
 
 func move(guard *Guard, visited [][][]Direction, grid [][]rune) StopReason {
-	for true {
+	for {
 		position := math.AddVector2i(guard.position, directionVectors[guard.direction])
 
 		if position.X >= len(grid) || position.X < 0 {
@@ -71,5 +71,4 @@ func move(guard *Guard, visited [][][]Direction, grid [][]rune) StopReason {
 		visited[position.X][position.Y] = append(visited[position.X][position.Y], guard.direction)
 		continue
 	}
-	panic("unreachable")
 }

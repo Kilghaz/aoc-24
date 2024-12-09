@@ -18,7 +18,7 @@ func calculateAntiNodesWithHarmonics(a, b Antenna, width, height int) []math.Vec
 
 	nodes := make([]math.Vector2i, 0)
 	i := 1
-	for true {
+	for {
 		nodeA := math.AddVector2i(math.MultiplyScalar(diffA, i), a.position)
 		nodeB := math.AddVector2i(math.MultiplyScalar(diffB, i), b.position)
 
