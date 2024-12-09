@@ -8,6 +8,7 @@ import (
 	"aoc24/day_5"
 	"aoc24/day_6"
 	"aoc24/day_7"
+	"aoc24/day_8"
 	"aoc24/io"
 	"os"
 )
@@ -40,6 +41,10 @@ var advents = map[int][]func(input string){
 	7: {
 		day_7.Part1,
 		day_7.Part2,
+	},
+	8: {
+		day_8.Part1,
+		day_8.Part2,
 	},
 }
 
