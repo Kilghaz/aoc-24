@@ -56,19 +56,19 @@ func main() {
 	}
 
 	if !exists(packageName) {
-		_ = os.Mkdir(packageName, 0644)
-		_ = os.WriteFile(path.Join(packageName, "part-1.go"), []byte(fmt.Sprintf(fileTemplate, day, 1)), 0644)
-		_ = os.WriteFile(path.Join(packageName, "part-2.go"), []byte(fmt.Sprintf(fileTemplate, day, 1)), 0644)
+		_ = os.Mkdir(packageName, 0755)
+		_ = os.WriteFile(path.Join(packageName, "part-1.go"), []byte(fmt.Sprintf(fileTemplate, day, 1)), 0755)
+		_ = os.WriteFile(path.Join(packageName, "part-2.go"), []byte(fmt.Sprintf(fileTemplate, day, 2)), 0755)
 	}
 
 	if !exists(inputFileName) {
 		input := client.LoadInput(date.Year(), day)
-		_ = os.WriteFile(path.Join(inputsPath, fmt.Sprintf("input-%d.txt", day)), []byte(input), 0644)
+		_ = os.WriteFile(path.Join(inputsPath, fmt.Sprintf("input-%d.txt", day)), []byte(input), 0755)
 	}
 
 	if !isMainSetup() {
 		updateImports()
 		updateMap()
-		_ = os.WriteFile("main/main.go", []byte(mainSrc), 0644)
+		_ = os.WriteFile("main/main.go", []byte(mainSrc), 0755)
 	}
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"aoc24/day_1"
 	"aoc24/day_10"
+	"aoc24/day_11"
 	"aoc24/day_2"
 	"aoc24/day_3"
 	"aoc24/day_4"
@@ -26,6 +27,7 @@ var advents = map[int][]func(input string){
 	8:  {day_8.Part1, day_8.Part2},
 	9:  {day_9.Part1, day_9.Part2},
 	10: {day_10.Part1, day_10.Part2},
+	11: {day_11.Part1, day_11.Part2},
 }
 
 func main() {
