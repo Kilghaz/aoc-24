@@ -13,7 +13,9 @@ import (
 	"aoc24/day_8"
 	"aoc24/day_9"
 	"aoc24/io"
+	"fmt"
 	"os"
+	"time"
 )
 
 var advents = map[int][]func(input string){
@@ -39,5 +41,10 @@ func main() {
 	} else {
 		input = io.LoadTestInput(day)
 	}
+
+	start := time.Now().UnixMicro()
 	advents[day][part](input)
+	end := time.Now().UnixMicro()
+
+	println(fmt.Sprintf("\nRuntime:\n%dμs \n%fms", end-start, (float64)(end-start)/1_000))
 }

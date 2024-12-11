@@ -20,22 +20,23 @@ func calculateStoneCount(stone Stone, blinkCount int) int {
 		return len(stones)
 	}
 
-	sum := lo.Map(stones, func(stone Stone, _ int) int {
+	sum := 0
+	for _, stone := range stones {
 		calculated := calculateStoneCount(stone, blinkCount-1)
 		cache[BlinkKey{stone, blinkCount - 1}] = calculated
-		return calculated
-	})
+		sum += calculated
+	}
 
-	return lo.Sum(sum)
+	return sum
 }
 
 func Part2(input string) {
 	stones := parseStones(input)
 	count := 75
 
-	stones = lo.Map(stones, func(stone Stone, _ int) int {
-		return calculateStoneCount(stone, count)
-	})
-
-	println(lo.Sum(stones))
+	sum := 0
+	for _, stone := range stones {
+		calculateStoneCount(stone, count)
+	}
+	println(sum)
 }
