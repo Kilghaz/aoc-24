@@ -29,7 +29,7 @@ func splitDigits(stone Stone) []Stone {
 	}
 }
 
-func flipToOne(stone Stone) []Stone {
+func flipToOne(_ Stone) []Stone {
 	return []Stone{1}
 }
 
