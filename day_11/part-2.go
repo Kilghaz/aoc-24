@@ -36,7 +36,7 @@ func Part2(input string) {
 
 	sum := 0
 	for _, stone := range stones {
-		calculateStoneCount(stone, count)
+		sum += calculateStoneCount(stone, count)
 	}
 	println(sum)
 }
