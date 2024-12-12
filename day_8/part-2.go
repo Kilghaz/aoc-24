@@ -2,9 +2,9 @@ package day_8
 
 import (
 	"aoc24/functional"
-	"aoc24/io"
 	"aoc24/math"
 	"aoc24/matrix"
+	"aoc24/parser"
 	"github.com/samber/lo"
 )
 
@@ -43,7 +43,7 @@ func calculateAntiNodesWithHarmonics(a, b Antenna, width, height int) []math.Vec
 }
 
 func Part2(input string) {
-	width, height := matrix.Dimension(io.ParseGrid(input))
+	width, height := matrix.Dimension(parser.ParseGrid(input))
 	antennasByFrequency := functional.KeyBy(parseAntennas(input), func(_ int, antenna Antenna) rune {
 		return antenna.frequency
 	})

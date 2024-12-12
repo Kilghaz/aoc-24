@@ -1,7 +1,7 @@
 package day_5
 
 import (
-	"aoc24/io"
+	"aoc24/parser"
 	"github.com/samber/lo"
 	"strings"
 )
@@ -16,8 +16,8 @@ func parseRules(input string) []Rule {
 	return lo.Map(strings.Split(rulesInput, "\n"), func(line string, _ int) Rule {
 		parts := strings.Split(line, "|")
 		return Rule{
-			before: io.ParseInt(parts[0]),
-			after:  io.ParseInt(parts[1]),
+			before: parser.ParseInt(parts[0]),
+			after:  parser.ParseInt(parts[1]),
 		}
 	})
 }
@@ -26,7 +26,7 @@ func parseUpdates(input string) [][]int {
 	updatesInput := strings.Split(input, "\n\n")[1]
 	return lo.Map(strings.Split(updatesInput, "\n"), func(line string, _ int) []int {
 		return lo.Map(strings.Split(line, ","), func(page string, _ int) int {
-			return io.ParseInt(page)
+			return parser.ParseInt(page)
 		})
 	})
 }

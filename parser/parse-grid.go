@@ -1,4 +1,4 @@
-package io
+package parser
 
 import (
 	"aoc24/matrix"

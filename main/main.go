@@ -4,6 +4,7 @@ import (
 	"aoc24/day_1"
 	"aoc24/day_10"
 	"aoc24/day_11"
+	"aoc24/day_12"
 	"aoc24/day_2"
 	"aoc24/day_3"
 	"aoc24/day_4"
@@ -13,6 +14,7 @@ import (
 	"aoc24/day_8"
 	"aoc24/day_9"
 	"aoc24/io"
+	"aoc24/parser"
 	"fmt"
 	"os"
 	"time"
@@ -30,11 +32,12 @@ var advents = map[int][]func(input string){
 	9:  {day_9.Part1, day_9.Part2},
 	10: {day_10.Part1, day_10.Part2},
 	11: {day_11.Part1, day_11.Part2},
+	12: {day_12.Part1, day_12.Part2},
 }
 
 func main() {
-	day := io.ParseInt(os.Args[1])
-	part := io.ParseInt(os.Args[2]) - 1
+	day := parser.ParseInt(os.Args[1])
+	part := parser.ParseInt(os.Args[2]) - 1
 	var input string
 	if len(os.Args) == 3 || os.Args[3] != "test" {
 		input = io.LoadInput(day)

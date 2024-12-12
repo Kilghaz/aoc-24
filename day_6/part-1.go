@@ -1,8 +1,8 @@
 package day_6
 
 import (
-	"aoc24/io"
 	"aoc24/math"
+	"aoc24/parser"
 	"github.com/samber/lo"
 )
 
@@ -18,7 +18,7 @@ func findStartPosition(grid [][]rune) math.Vector2i {
 }
 
 func Part1(input string) {
-	grid := io.ParseGrid(input)
+	grid := parser.ParseGrid(input)
 	startPosition := findStartPosition(grid)
 	visited := lo.Map(grid, func(row []rune, _ int) [][]Direction {
 		return lo.Map(row, func(item rune, _ int) []Direction {

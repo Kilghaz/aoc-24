@@ -1,6 +1,6 @@
 package day_9
 
-import "aoc24/io"
+import "aoc24/parser"
 
 func parseBlocks(input string) []Block {
 	blocks := make([]Block, 0)
@@ -18,7 +18,7 @@ func parseBlocks(input string) []Block {
 			fileId++
 		}
 
-		size := io.ParseInt(string(r))
+		size := parser.ParseInt(string(r))
 
 		blocks = append(blocks, Block{
 			blockType: blockType,
