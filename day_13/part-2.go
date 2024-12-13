@@ -13,9 +13,9 @@ func Part2(input string) {
 		machine.prize.Y += 10000000000000
 
 		a, b := solve(machine)
-		pa, pb := press(machine, a, b)
+		px, py := press(machine, a, b)
 
-		if pa != machine.prize.X || pb != machine.prize.Y {
+		if px != machine.prize.X || py != machine.prize.Y {
 			continue
 		}
 
