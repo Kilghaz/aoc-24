@@ -6,13 +6,6 @@ import (
 	"errors"
 )
 
-var directions = []math.Vector2i{
-	{Y: -1},
-	{Y: 1},
-	{X: -1},
-	{X: 1},
-}
-
 type Node[T any] struct {
 	Position math.Vector2i
 	Value    T
@@ -44,7 +37,7 @@ func ParseNodes[T any](input string, iterator func(item rune) T) []*Node[T] {
 
 	for key, node := range nodes {
 		siblings := make([]*Node[T], 0)
-		for _, direction := range directions {
+		for _, direction := range math.OrthogonalDirections {
 			position := math.AddVector2i(node.Position, direction)
 			sibling, _ := findByPosition(position)
 			if sibling == nil {

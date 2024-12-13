@@ -5,8 +5,6 @@ import (
 	"aoc24/parser"
 )
 
-type GardenLot = parser.Node[rune]
-
 func parseGardenLots(input string) []*GardenLot {
 	return parser.ParseNodes(input, functional.Identity[rune]())
 }

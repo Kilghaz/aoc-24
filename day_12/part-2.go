@@ -2,80 +2,47 @@ package day_12
 
 import (
 	"aoc24/math"
-	"aoc24/matrix"
-	"aoc24/parser"
+	"github.com/samber/lo"
 )
 
-var directions = []Position{
-	{Y: -1},
-	{Y: 1},
-	{X: -1},
-	{X: 1},
-}
+func calculateSides(region Region) int {
+	sides := 0
 
-var cornersOffsets = []Position{
-	{1, 1}, {-1, 1}, {1, -1}, {-1, -1},
-}
+	lotsByPosition := lo.KeyBy(region, func(lot *GardenLot) Position {
+		return lot.Position
+	})
 
-func isWithinBounds(i Position, maxRow, maxCol int) bool {
-	return i.X >= 0 && i.Y >= 0 && i.X < maxRow && i.Y < maxCol
-}
+	for _, lot := range region {
+		for _, direction := range math.DiagonalDirections {
+			cornerLot := lotsByPosition[math.AddVector2i(lot.Position, direction)]
+			horizontalLot := lotsByPosition[math.AddVector2i(lot.Position, Position{X: direction.X})]
+			verticalLot := lotsByPosition[math.AddVector2i(lot.Position, Position{Y: direction.Y})]
 
-func isSamePlant(a, b Position, grid [][]rune) bool {
-	width, height := matrix.Dimension(grid)
+			isCorner := hasSamePlant(horizontalLot, verticalLot)
+			isInsideCorner := isCorner && !hasSamePlant(horizontalLot, lot)
+			isOutsideCorner := isCorner && !isInsideCorner && !hasSamePlant(cornerLot, lot)
 
-	if !isWithinBounds(a, width, height) && !isWithinBounds(b, width, height) {
-		return true
-	}
+			if isInsideCorner {
+				sides++
+			}
 
-	if isWithinBounds(a, width, height) && isWithinBounds(b, width, height) {
-		return grid[a.X][a.Y] == grid[b.X][b.Y]
-	}
-
-	return false
-}
-
-func countCorners(lotPosition Position, grid [][]rune, visited map[Position]bool, currPlant rune, area, corners *int) {
-	maxRow, maxCol := len(grid), len(grid[0])
-	visited[lotPosition] = true
-
-	for _, dir := range directions {
-		nextIndex := Position{X: lotPosition.X + dir.X, Y: lotPosition.Y + dir.Y}
-		if isWithinBounds(nextIndex, maxRow, maxCol) && grid[nextIndex.X][nextIndex.Y] == currPlant {
-			if !visited[nextIndex] {
-				*area++
-				countCorners(nextIndex, grid, visited, currPlant, area, corners)
+			if isOutsideCorner {
+				sides++
 			}
 		}
 	}
 
-	for _, cornerOffset := range cornersOffsets {
-		cornerPos := math.AddVector2i(lotPosition, cornerOffset)
-
-		horizontal := math.AddVector2i(lotPosition, Position{X: cornerOffset.X})
-		vertical := math.AddVector2i(lotPosition, Position{Y: cornerOffset.Y})
-
-		if !isSamePlant(horizontal, lotPosition, grid) && !isSamePlant(vertical, lotPosition, grid) {
-			*corners++
-		}
-
-		if isSamePlant(horizontal, lotPosition, grid) && isSamePlant(vertical, lotPosition, grid) && !isSamePlant(lotPosition, cornerPos, grid) {
-			*corners++
-		}
-	}
+	return sides
 }
 
 func Part2(input string) {
-	grid := parser.ParseGrid(input)
+	gardenLots := parseGardenLots(input)
+	regions := findRegions(gardenLots)
+
 	totalPrice := 0
-	visited := make(map[Position]bool)
-	matrix.Traverse(grid, func(plant rune, x int, y int) {
-		position := Position{X: x, Y: y}
-		if !visited[position] {
-			var area, corners int
-			countCorners(position, grid, visited, plant, &area, &corners)
-			totalPrice += (area + 1) * corners
-		}
-	})
+	for _, region := range regions {
+		totalPrice += calculateArea(region) * calculateSides(region)
+	}
+
 	println(totalPrice)
 }

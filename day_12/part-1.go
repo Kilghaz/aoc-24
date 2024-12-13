@@ -22,11 +22,10 @@ func Part1(input string) {
 	gardenLots := parseGardenLots(input)
 	regions := findRegions(gardenLots)
 
-	sum := 0
+	totalPrice := 0
 	for _, region := range regions {
-		perimeter := calculatePerimeter(region)
-		area := calculateArea(region)
-		sum += perimeter * area
+		totalPrice += calculatePerimeter(region) * calculateArea(region)
 	}
-	println(sum)
+
+	println(totalPrice)
 }
