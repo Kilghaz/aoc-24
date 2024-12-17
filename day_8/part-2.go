@@ -44,7 +44,7 @@ func calculateAntiNodesWithHarmonics(a, b Antenna, width, height int) []math.Vec
 
 func Part2(input string) {
 	width, height := matrix.Dimension(parser.ParseGrid(input))
-	antennasByFrequency := functional.KeyBy(parseAntennas(input), func(_ int, antenna Antenna) rune {
+	antennasByFrequency := functional.KeyBy(parseAntennas(input), func(antenna Antenna, _ int) rune {
 		return antenna.frequency
 	})
 	pairs := createUniqueAntennaPairs(antennasByFrequency)

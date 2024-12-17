@@ -35,7 +35,7 @@ func calculateAntiNodes(a, b Antenna) []math.Vector2i {
 
 func Part1(input string) {
 	width, height := matrix.Dimension(parser.ParseGrid(input))
-	antennasByFrequency := functional.KeyBy(parseAntennas(input), func(_ int, antenna Antenna) rune {
+	antennasByFrequency := functional.KeyBy(parseAntennas(input), func(antenna Antenna, _ int) rune {
 		return antenna.frequency
 	})
 	pairs := createUniqueAntennaPairs(antennasByFrequency)
