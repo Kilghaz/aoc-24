@@ -13,7 +13,7 @@ func parseAntennas(input string) []Antenna {
 			return
 		}
 		antennas = append(antennas, Antenna{
-			position:  math.Vector2i{x, y},
+			position:  math.Vector2[int]{x, y},
 			frequency: frequency,
 		})
 	})

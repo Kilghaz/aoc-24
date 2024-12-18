@@ -14,9 +14,9 @@ func calculateSides(region Region) int {
 
 	for _, lot := range region {
 		for _, direction := range math.DiagonalDirections {
-			cornerLot := lotsByPosition[math.AddVector2i(lot.Position, direction)]
-			horizontalLot := lotsByPosition[math.AddVector2i(lot.Position, Position{X: direction.X})]
-			verticalLot := lotsByPosition[math.AddVector2i(lot.Position, Position{Y: direction.Y})]
+			cornerLot := lotsByPosition[math.AddVector2(lot.Position, direction)]
+			horizontalLot := lotsByPosition[math.AddVector2(lot.Position, Position{X: direction.X})]
+			verticalLot := lotsByPosition[math.AddVector2(lot.Position, Position{Y: direction.Y})]
 
 			isCorner := hasSamePlant(horizontalLot, verticalLot)
 			isInsideCorner := isCorner && !hasSamePlant(horizontalLot, lot)

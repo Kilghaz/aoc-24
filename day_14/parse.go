@@ -13,8 +13,8 @@ func parseRobots(input string) []Robot {
 		exp, _ := regexp.Compile("-?\\d+")
 		numbers := exp.FindAllString(line, -1)
 		return Robot{
-			position: math.Vector2i{X: parser.ParseInt(numbers[0]), Y: parser.ParseInt(numbers[1])},
-			velocity: math.Vector2i{X: parser.ParseInt(numbers[2]), Y: parser.ParseInt(numbers[3])},
+			position: math.Vector2[int]{X: parser.ParseInt(numbers[0]), Y: parser.ParseInt(numbers[1])},
+			velocity: math.Vector2[int]{X: parser.ParseInt(numbers[2]), Y: parser.ParseInt(numbers[3])},
 		}
 	})
 }

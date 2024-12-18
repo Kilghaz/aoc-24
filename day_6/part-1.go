@@ -6,11 +6,11 @@ import (
 	"github.com/samber/lo"
 )
 
-func findStartPosition(grid [][]rune) math.Vector2i {
+func findStartPosition(grid [][]rune) math.Vector2[int] {
 	for x := 0; x < len(grid); x++ {
 		for y := 0; y < len(grid[x]); y++ {
 			if grid[x][y] == '^' {
-				return math.Vector2i{x, y}
+				return math.Vector2[int]{x, y}
 			}
 		}
 	}

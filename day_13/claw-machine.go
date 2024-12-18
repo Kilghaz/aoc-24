@@ -2,8 +2,8 @@ package day_13
 
 import "aoc24/math"
 
-type Delta = math.Vector2i
-type Location = math.Vector2i
+type Delta = math.Vector2[int]
+type Location = math.Vector2[int]
 
 type ClawMachine struct {
 	buttonA Delta

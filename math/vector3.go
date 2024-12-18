@@ -2,10 +2,6 @@ package math
 
 import "math"
 
-type Numeric interface {
-	~int | ~uint8 | ~uint16 | ~uint32 | ~float32 | ~float64
-}
-
 type Vector3[T Numeric] struct {
 	X, Y, Z T
 }
