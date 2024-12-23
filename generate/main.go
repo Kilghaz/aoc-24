@@ -2,11 +2,14 @@ package main
 
 import (
 	"aoc24/aoc"
+	"aoc24/idea"
 	"fmt"
+	"github.com/samber/lo"
 	"os"
 	"path"
 	"regexp"
 	"slices"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -19,11 +22,8 @@ func exists(path string) bool {
 	return err == nil
 }
 
-func main() {
+func generate(year, day int) {
 	client := aoc.CreateClient()
-	date := time.Now().Local()
-	day := date.Day()
-
 	inputFileName := path.Join(inputsPath, fmt.Sprintf("input-%d.txt", day))
 	packageName := fmt.Sprintf("day_%d", day)
 	file, _ := os.ReadFile("main/main.go")
@@ -62,7 +62,7 @@ func main() {
 	}
 
 	if !exists(inputFileName) {
-		input := client.LoadInput(date.Year(), day)
+		input := client.LoadInput(year, day)
 		_ = os.WriteFile(path.Join(inputsPath, fmt.Sprintf("input-%d.txt", day)), []byte(input), 0755)
 	}
 
@@ -70,5 +70,59 @@ func main() {
 		updateImports()
 		updateMap()
 		_ = os.WriteFile("main/main.go", []byte(mainSrc), 0755)
+	}
+
+	configs := createRunConfigurations(day)
+
+	for _, config := range configs {
+		if idea.HasRunConfiguration(config.Name) {
+			continue
+		}
+
+		println(fmt.Sprintf("add config for %d", day))
+		idea.AddRunConfiguration(&config)
+	}
+
+}
+
+func createBaseRunConfiguration() idea.RunConfiguration {
+	return idea.RunConfiguration{
+		Type:             "GoApplicationRunConfiguration",
+		FactoryName:      "Go Application",
+		Module:           "advent2024",
+		WorkingDirectory: "$PROJECT_DIR$",
+		Kind:             "PACKAGE",
+		Package:          "aoc24/main",
+		Directory:        "$PROJECT_DIR$",
+		FilePath:         "$PROJECT_DIR$/main/main.go",
+		Method:           2,
+	}
+}
+
+func createRunConfigurations(day int) []idea.RunConfiguration {
+	var configurations []idea.RunConfiguration
+	for i := range 2 {
+		part := i + 1
+		config := createBaseRunConfiguration()
+		config.Name = fmt.Sprintf("Day %d, part %d", day, part)
+		config.Parameters = []string{strconv.Itoa(day), strconv.Itoa(part)}
+		config.FolderName = fmt.Sprintf("Day %d", day)
+		configurations = append(configurations, config)
+
+		testConfig := createBaseRunConfiguration()
+		testConfig.Name = fmt.Sprintf("Day %d, part %d (test)", day, part)
+		testConfig.Parameters = []string{strconv.Itoa(day), strconv.Itoa(part), "test"}
+		testConfig.FolderName = fmt.Sprintf("Day %d", day)
+		configurations = append(configurations, testConfig)
+	}
+	return configurations
+}
+
+func main() {
+	date := time.Now().Local()
+	year := date.Year()
+
+	for day := range lo.Min([]int{date.Day(), 25}) {
+		generate(year, day+1)
 	}
 }
