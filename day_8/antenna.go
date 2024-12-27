@@ -1,8 +1,10 @@
 package day_8
 
-import "aoc24/math"
+import (
+	"aoc24/vec2"
+)
 
 type Antenna struct {
-	position  math.Vector2[int]
+	position  vec2.Vector2i
 	frequency rune
 }

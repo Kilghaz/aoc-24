@@ -1,9 +1,9 @@
 package day_8
 
 import (
-	"aoc24/math"
 	"aoc24/matrix"
 	"aoc24/parser"
+	"aoc24/vec2"
 )
 
 func parseAntennas(input string) []Antenna {
@@ -13,7 +13,7 @@ func parseAntennas(input string) []Antenna {
 			return
 		}
 		antennas = append(antennas, Antenna{
-			position:  math.Vector2[int]{x, y},
+			position:  vec2.Vector2i{X: x, Y: y},
 			frequency: frequency,
 		})
 	})

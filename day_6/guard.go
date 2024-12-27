@@ -1,7 +1,7 @@
 package day_6
 
 import (
-	"aoc24/math"
+	"aoc24/vec2"
 	"github.com/samber/lo"
 )
 
@@ -21,7 +21,7 @@ const (
 	Right Direction = "right"
 )
 
-var directionVectors = map[Direction]math.Vector2[int]{
+var directionVectors = map[Direction]vec2.Vector2i{
 	Up:    {0, -1},
 	Right: {1, 0},
 	Down:  {0, 1},
@@ -29,7 +29,7 @@ var directionVectors = map[Direction]math.Vector2[int]{
 }
 
 type Guard struct {
-	position  math.Vector2[int]
+	position  vec2.Vector2i
 	direction Direction
 }
 
@@ -48,7 +48,7 @@ func rotate(guard *Guard) {
 
 func move(guard *Guard, visited [][][]Direction, grid [][]rune) StopReason {
 	for {
-		position := math.AddVector2(guard.position, directionVectors[guard.direction])
+		position := vec2.Add(guard.position, directionVectors[guard.direction])
 
 		if position.X >= len(grid) || position.X < 0 {
 			return OutOfBounds

@@ -1,13 +1,13 @@
 package parser
 
 import (
-	"aoc24/math"
 	"aoc24/matrix"
+	"aoc24/vec2"
 	"errors"
 )
 
 type Node[T any] struct {
-	Position math.Vector2[int]
+	Position vec2.Vector2i
 	Value    T
 	Siblings []*Node[T]
 }
@@ -17,7 +17,7 @@ func ParseNodes[T any](input string, iterator func(item rune) T) []*Node[T] {
 	grid := ParseGrid(input)
 
 	matrix.Traverse(grid, func(item rune, x int, y int) {
-		position := math.Vector2[int]{X: x, Y: y}
+		position := vec2.Vector2i{X: x, Y: y}
 		node := Node[T]{
 			Position: position,
 			Value:    iterator(item),
@@ -26,7 +26,7 @@ func ParseNodes[T any](input string, iterator func(item rune) T) []*Node[T] {
 		nodes = append(nodes, &node)
 	})
 
-	var findByPosition = func(position math.Vector2[int]) (*Node[T], error) {
+	var findByPosition = func(position vec2.Vector2i) (*Node[T], error) {
 		for _, node := range nodes {
 			if node.Position.X == position.X && node.Position.Y == position.Y {
 				return node, nil
@@ -37,8 +37,8 @@ func ParseNodes[T any](input string, iterator func(item rune) T) []*Node[T] {
 
 	for key, node := range nodes {
 		siblings := make([]*Node[T], 0)
-		for _, direction := range math.OrthogonalDirections {
-			position := math.AddVector2(node.Position, direction)
+		for _, direction := range vec2.OrthogonalDirections {
+			position := vec2.Add(node.Position, direction)
 			sibling, _ := findByPosition(position)
 			if sibling == nil {
 				continue

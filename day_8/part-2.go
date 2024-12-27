@@ -2,25 +2,25 @@ package day_8
 
 import (
 	"aoc24/functional"
-	"aoc24/math"
 	"aoc24/matrix"
 	"aoc24/parser"
+	"aoc24/vec2"
 	"github.com/samber/lo"
 )
 
-func isInBound(position math.Vector2[int], width, height int) bool {
+func isInBound(position vec2.Vector2i, width, height int) bool {
 	return position.X >= 0 && position.X < width && position.Y >= 0 && position.Y < height
 }
 
-func calculateAntiNodesWithHarmonics(a, b Antenna, width, height int) []math.Vector2[int] {
-	diffA := math.SubVector2(b.position, a.position)
-	diffB := math.SubVector2(a.position, b.position)
+func calculateAntiNodesWithHarmonics(a, b Antenna, width, height int) []vec2.Vector2i {
+	diffA := vec2.Subtract(b.position, a.position)
+	diffB := vec2.Subtract(a.position, b.position)
 
-	nodes := make([]math.Vector2[int], 0)
+	nodes := make([]vec2.Vector2i, 0)
 	i := 1
 	for {
-		nodeA := math.AddVector2(math.MultiplyScalarVector2(diffA, i), a.position)
-		nodeB := math.AddVector2(math.MultiplyScalarVector2(diffB, i), b.position)
+		nodeA := vec2.Add(vec2.MultiplyScalar(diffA, i), a.position)
+		nodeB := vec2.Add(vec2.MultiplyScalar(diffB, i), b.position)
 
 		inBoundA := isInBound(nodeA, width, height)
 		inBoundB := isInBound(nodeB, width, height)
@@ -48,7 +48,7 @@ func Part2(input string) {
 		return antenna.frequency
 	})
 	pairs := createUniqueAntennaPairs(antennasByFrequency)
-	nodes := lo.Uniq(lo.FlatMap(pairs, func(pair []Antenna, _ int) []math.Vector2[int] {
+	nodes := lo.Uniq(lo.FlatMap(pairs, func(pair []Antenna, _ int) []vec2.Vector2i {
 		return calculateAntiNodesWithHarmonics(pair[0], pair[1], width, height)
 	}))
 

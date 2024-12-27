@@ -1,5 +1,7 @@
 package day_12
 
-import "aoc24/math"
+import (
+	"aoc24/vec2"
+)
 
-type Position = math.Vector2[int]
+type Position = vec2.Vector2i

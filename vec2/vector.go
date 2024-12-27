@@ -1,6 +1,8 @@
-package math
+package vec2
 
-type Vector2[T Numeric] struct {
+import "aoc24/math"
+
+type Vector2[T math.Numeric] struct {
 	X, Y int
 }
 
@@ -26,14 +28,14 @@ var DiagonalDirections = []Vector2[int]{
 	UpRight, DownRight, UpLeft, DownLeft,
 }
 
-func AddVector2[T Numeric](a, b Vector2[T]) Vector2[T] {
+func Add[T math.Numeric](a, b Vector2[T]) Vector2[T] {
 	return Vector2[T]{a.X + b.X, a.Y + b.Y}
 }
 
-func SubVector2[T Numeric](a, b Vector2[T]) Vector2[T] {
+func Subtract[T math.Numeric](a, b Vector2[T]) Vector2[T] {
 	return Vector2[T]{a.X - b.X, a.Y - b.Y}
 }
 
-func MultiplyScalarVector2[T Numeric](vector Vector2[T], scalar int) Vector2[T] {
+func MultiplyScalar[T math.Numeric](vector Vector2[T], scalar int) Vector2[T] {
 	return Vector2[T]{vector.X * scalar, vector.Y * scalar}
 }

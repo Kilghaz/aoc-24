@@ -1,14 +1,16 @@
 package day_14
 
-import "aoc24/math"
+import (
+	"aoc24/vec2"
+)
 
 type Robot struct {
-	position math.Vector2[int]
-	velocity math.Vector2[int]
+	position vec2.Vector2i
+	velocity vec2.Vector2i
 }
 
 func step(robot *Robot, steps int) {
-	robot.position = math.AddVector2(robot.position, math.MultiplyScalarVector2(robot.velocity, steps))
+	robot.position = vec2.Add(robot.position, vec2.MultiplyScalar(robot.velocity, steps))
 }
 
 func teleport(robot *Robot, width, height int) {

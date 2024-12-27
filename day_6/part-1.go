@@ -1,16 +1,16 @@
 package day_6
 
 import (
-	"aoc24/math"
 	"aoc24/parser"
+	"aoc24/vec2"
 	"github.com/samber/lo"
 )
 
-func findStartPosition(grid [][]rune) math.Vector2[int] {
+func findStartPosition(grid [][]rune) vec2.Vector2i {
 	for x := 0; x < len(grid); x++ {
 		for y := 0; y < len(grid[x]); y++ {
 			if grid[x][y] == '^' {
-				return math.Vector2[int]{x, y}
+				return vec2.Vector2i{X: x, Y: y}
 			}
 		}
 	}
